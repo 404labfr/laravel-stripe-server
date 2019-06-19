@@ -1,0 +1,53 @@
+{
+  "name": "lab404/laravel-stripe-server",
+  "description": "Laravel Stripe Server is a library to handle Stripe SCA checkout.",
+  "type": "library",
+  "keywords": [
+    "laravel",
+    "package",
+    "plugin",
+    "stripe",
+    "server",
+    "payment",
+    "sca",
+    "checkout",
+    "laravel-package",
+    "laravel-plugin"
+  ],
+  "require": {
+    "php": "^7.1.3",
+    "laravel/framework": ">=5.8",
+    "stripe/stripe-php": "^6.37"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^7.5 || ^8.0",
+    "orchestra/testbench": "~3.8.0",
+    "orchestra/database": "~3.8.0"
+  },
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "404lab",
+      "email": "web@404lab.fr"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Lab404\\StripeServer\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Lab404\\Tests\\": "tests/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Lab404\\StripeServer\\StripeServerServiceProvider"
+      ]
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}
