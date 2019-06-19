@@ -138,6 +138,22 @@ With container:
 app('stripe')->method();
 ```
 
+### Working with your models
+
+When a model has the `Lab404\StripeServer\Models\HasStripeCheckout` you have access to the following methods and scopes:
+```php
+// Scopes
+Model::hasCheckouts()->get();
+Model::hasPaidCheckouts()->get();
+Model::hasUnpaidCheckouts()->get();
+
+// Methods
+$models->checkouts(); // returns all checkout for the model
+
+// Eager loading
+$models = Model::with('checkouts')->get(); 
+```
+
 ### Customize the `StripeCheckout` model
 
 TODO
