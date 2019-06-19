@@ -17,7 +17,7 @@ Laravel Stripe Server is a library to handle Stripe SCA checkout.
 
 ## Intended workflow
 
-1. You have a `Order` model with a stripe checkout. Your create the order in your controller.
+1. You have an `Order` model with a stripe checkout. You create the order in your controller.
 
 ```php
 use App\Models\Order;
@@ -41,15 +41,15 @@ class OrderController
         $response = $session->call();
         
         // Create your checkout model
-        $checkout = Stripe::registerCheckout($session, $order);
+        $checkout = Stripe::registerCheckout($response, $order);
         
-        return Stripe::redirectSession($session->id);
+        return Stripe::redirectSession($response->id);
     }
 }
 ```
 
-2. Your user is redirected to stripe, he fills his informations and he his redirected to your success URL. The order is not paid yet.
-Asynchronously, the plugin with try to get new events from Stripe and will mark the checkout as paid by dispatching the `CheckoutSessionCompleted` event:
+2. Your user is redirected to stripe, he fills his informations and he's redirected to your success URL. The order is not paid yet.
+Asynchronously, the plugin will try to get new events from Stripe and will dispatch the `CheckoutSessionCompleted` event:
 
 ```php
 class CheckoutEventSubscriber
@@ -73,6 +73,16 @@ class CheckoutEventSubscriber
         $checkout->is_paid = true;
         $checkout->save();
     }
+}
+```
+
+3. You can use your model like this:
+```php
+$order = Order::with('checkouts')->first();
+if ($order->checkouts->first()->is_paid) {
+    echo 'Order is paid';
+} else {
+    echo 'Order is not paid';
 }
 ```
 
