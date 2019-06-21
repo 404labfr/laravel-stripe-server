@@ -2,8 +2,8 @@
 
 namespace Lab404\StripeServer;
 
-use App\Console\Commands\Events;
-use App\Console\Commands\StripeCompletedCheckout;
+use Lab404\StripeServer\Commands\Events;
+use Lab404\StripeServer\Commands\StripeCompletedCheckout;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 
