@@ -6,6 +6,7 @@ Laravel Stripe Server is a library to handle Stripe SCA checkout.
 - [Intended workflow](#intended-workflow)
 - [Installation](#installation)
 - [Going deeper](#going-deeper)
+- [Nova](#nova)
 - [Tests](#tests)
 - [Contribute](#contribute)
 - [Licence](#licence)
@@ -166,6 +167,18 @@ See the `stripe-server::redirector` view.
 TODO
 
 See `Lab404\StripeServer\Commands\Events` and `Lab404\StripeServer\Events\StripeEvent`.
+
+## Nova
+
+If you're using [Laravel Nova](https://nova.laravel.com) you can add the `Lab404\StripeServer\Nova\StripeCheckout` resource:
+
+```
+Laravel\Nova\Nova::resources([
+    Lab404\StripeServer\Nova\StripeCheckout::class,
+]);
+```
+
+This resource is not dynamically registered because it's quite simple and you may want to override it. More Nova features like Refund Action or Cards are coming.
 
 ## Tests
 
