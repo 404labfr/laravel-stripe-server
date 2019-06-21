@@ -34,15 +34,14 @@ class OrderController
         $order->save();
         
         // Create your checkout session
-        $session = Stripe::requestCreateSession();
-        $session->setCustomerEmail($request->user()->email);
-        $session->setReturnUrls($confirm_url, $cancel_url);
-        $session->setProduct('T-shirt', 5000, 'EUR', 1, $picture_url);
-        
-        $response = $session->call();
+        $session = Stripe::requestCreateSession()
+                    ->setCustomerEmail($request->user()->email)
+                    ->setReturnUrls($confirm_url, $cancel_url)
+                    ->setProduct('T-shirt', 5000, 'EUR', 1, $picture_url)
+                    ->call();
         
         // Create your checkout model
-        $checkout = Stripe::registerCheckout($response, $order);
+        $checkout = Stripe::registerCheckout($session, $order);
         
         return Stripe::redirectSession($response->id);
     }
