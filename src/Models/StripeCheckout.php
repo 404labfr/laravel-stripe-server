@@ -28,6 +28,12 @@ class StripeCheckout extends Model
         return $this->morphTo();
     }
 
+    public function markAsPaid(): bool
+    {
+        $this->attributes['is_paid'] = 1;
+        return $this->save();
+    }
+
     public function scopeIsPaid(Builder $query): void
     {
         $query->where('is_paid', 1);

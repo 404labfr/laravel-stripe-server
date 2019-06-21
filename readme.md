@@ -17,8 +17,9 @@ Laravel Stripe Server is a library to handle Stripe SCA checkout.
 
 ## Intended workflow
 
-1. You have an `Order` model with a stripe checkout. You create the order in your controller.
+- You have an `Order` model with a stripe checkout. You create the order in your controller.
 
+Example model:
 ```php
 use App\Models\Order;
 use Lab404\StripeServer\Facades\Stripe;
@@ -48,35 +49,30 @@ class OrderController
 }
 ```
 
-2. Your user is redirected to stripe, he fills his informations and he's redirected to your success URL. The order is not paid yet.
+- Your user is redirected to stripe, he fills his informations and he's redirected to your success URL. The order is not paid yet.
 Asynchronously, the plugin will try to get new events from Stripe and will dispatch the `CheckoutSessionCompleted` event:
 
+Example listener:
 ```php
-class CheckoutEventSubscriber
+use Lab404\StripeServer\Events\CheckoutSessionCompleted;
+use Lab404\StripeServer\Models\StripeCheckout;
+
+class CheckoutListener
 {
-    public function subscribe($events)
+    public function handle(CheckoutSessionCompleted $event): void
     {
-        $events->listen(
-            'Lab404\StripeServer\Events\CheckoutSessionCompleted',
-            [$this, 'handle']
-        );
-    }
-    
-    public function handle($event)
-    {
-        /** @var Lab404\StripeServer\Models\StripeCheckout $checkout */
+        /** @var StripeCheckout $checkout */
         $checkout = $event->checkout;
         /** Your charged model */
         $chargeable = $checkout->chargeable;
       
         /** Important! Mark the checkout as paid */
-        $checkout->is_paid = true;
-        $checkout->save();
+        $checkout->markAsPaid();
     }
 }
 ```
 
-3. You can use your model like this:
+- You can use your model like this:
 ```php
 $order = Order::with('checkouts')->first();
 if ($order->checkouts->first()->is_paid) {
