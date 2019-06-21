@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Console\Commands;
+namespace Lab404\StripeServer\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Database\Eloquent\Collection;
