@@ -32,7 +32,7 @@ class Stripe
         ]);
     }
 
-    public function registerCheckout(\Stripe\Charge $session, Model $model): Model
+    public function registerCheckout(\Stripe\Checkout\Session $session, Model $model): Model
     {
         $class = Config::get('stripe-server.model');
 
