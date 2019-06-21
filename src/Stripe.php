@@ -68,6 +68,6 @@ class Stripe
 
     public function requestSessionCheckoutCompletedEvents(int $hours = 24): Events
     {
-        return $this->events('checkout.session.completed', $hours);
+        return $this->requestEvents('checkout.session.completed', $hours);
     }
 }
