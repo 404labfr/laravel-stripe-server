@@ -16,7 +16,7 @@ class Events extends Command
 
     public function handle(Stripe $stripe)
     {
-        $events = $stripe->eventsCommand($this->option('period'))->call();
+        $events = $stripe->requestEvents($this->option('period'))->call();
 
         if ($events->isEmpty()) {
             $this->info('No events found for this period.');

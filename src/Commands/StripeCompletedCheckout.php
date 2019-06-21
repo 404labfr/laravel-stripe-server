@@ -18,7 +18,7 @@ class StripeCompletedCheckout extends Command
 
     public function handle(Stripe $stripe)
     {
-        $events = $stripe->sessionCheckoutCompletedEventsCommand($this->option('period'))->call();
+        $events = $stripe->requestSessionCheckoutCompletedEvents($this->option('period'))->call();
 
         if ($events->isEmpty()) {
             $this->info('No events found for this period.');
