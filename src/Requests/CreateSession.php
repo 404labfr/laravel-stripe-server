@@ -16,13 +16,13 @@ class CreateSession extends Command
 
     public function setCustomerEmail(string $email): self
     {
-        $this->customer_email = $email;
+        $this->params['customer_email'] = $email;
         return $this;
     }
 
     public function setCustomer(string $identifier): self
     {
-        $this->customer = $identifier;
+        $this->params['customer'] = $identifier;
         return $this;
     }
 
@@ -32,31 +32,31 @@ class CreateSession extends Command
      */
     public function setPaymentMethods($methods = 'card'): self
     {
-        $this->payment_method_types = is_array($methods) ? $methods : [$methods];
+        $this->params['payment_method_types'] = is_array($methods) ? $methods : [$methods];
         return $this;
     }
 
     public function setLocale(string $locale = 'auto'): self
     {
-        $this->locale = $locale;
+        $this->params['locale'] = $locale;
         return $this;
     }
 
     public function setSubmit(string $submit): self
     {
-        $this->submit_type = $submit;
+        $this->params['submit_type'] = $submit;
         return $this;
     }
 
     public function setSuccessUrl(string $succes_url): self
     {
-        $this->success_url = $succes_url;
+        $this->params['success_url'] = $succes_url;
         return $this;
     }
 
     public function setCancelUrl(string $cancel_url): self
     {
-        $this->cancel_url = $cancel_url;
+        $this->params['cancel_url'] = $cancel_url;
         return $this;
     }
 
@@ -75,7 +75,7 @@ class CreateSession extends Command
      */
     public function setProduct(string $name, int $amount, string $currency, int $quantity, $images): self
     {
-        $this->line_items = [];
+        $this->params['line_items'] = [];
         return $this->addProduct($name, $amount, $currency, $quantity, $images);
     }
 
@@ -89,7 +89,7 @@ class CreateSession extends Command
      */
     public function addProduct(string $name, int $amount, string $currency, int $quantity, $images): self
     {
-        $this->line_items[] = [
+        $this->params['line_items'][] = [
             'name' => $name,
             'quantity' => $quantity,
             'amount' => $amount,

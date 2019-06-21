@@ -19,13 +19,13 @@ class Events extends Command
 
     public function setType(string $type): self
     {
-        $this->type = $type;
+        $this->params['type'] = $type;
         return $this;
     }
 
     public function setHours(int $hours): self
     {
-        $this->created = [
+        $this->params['created'] = [
             'gte' => time() - abs($hours) * 60 * 60
         ];
         return $this;

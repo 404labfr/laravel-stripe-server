@@ -15,25 +15,25 @@ class Charge extends Command
 
     public function setAmount(int $amount): self
     {
-        $this->amount = $amount;
+        $this->params['amount'] = $amount;
         return $this;
     }
 
     public function setCurrency(string $currency): self
     {
-        $this->currency = $currency;
+        $this->params['currency'] = $currency;
         return $this;
     }
 
     public function setSource(string $source): self
     {
-        $this->source = $source;
+        $this->params['source'] = $source;
         return $this;
     }
 
     public function setDescription(string $description): self
     {
-        $this->description = $description;
+        $this->params['description'] = $description;
         return $this;
     }
 

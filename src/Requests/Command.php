@@ -29,24 +29,4 @@ abstract class Command
     abstract protected function class(): string;
 
     abstract protected function method(): string;
-
-    public function __set($name, $value)
-    {
-        $key = strtolower($name);
-
-        if (array_key_exists($key, $this->params)) {
-            $this->params[$key] = $value;
-        }
-    }
-
-    public function __get($name)
-    {
-        $key = strtolower($name);
-
-        if (array_key_exists($key, $this->params)) {
-            return $this->params[$key];
-        }
-
-        return null;
-    }
 }
