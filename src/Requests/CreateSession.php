@@ -8,7 +8,7 @@ class CreateSession extends Command
         'customer_email' => null,
         'payment_method_types' => ['card'],
         'line_items' => [],
-        'locale' => 'auro',
+        'locale' => 'auto',
         'submit_type' => 'pay',
         'success_url' => '',
         'cancel_url' => '',
