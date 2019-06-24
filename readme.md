@@ -1,6 +1,6 @@
 # Laravel Stripe Server
 
-Laravel Stripe Server is a library to handle Stripe SCA checkout.
+Laravel Stripe Server is a library to handle Stripe SCA checkout for your models.
 
 - [Requirements](#requirements)
 - [Intended workflow](#intended-workflow)
@@ -74,8 +74,8 @@ class CheckoutListener
 
 - You can use your model like this:
 ```php
-$order = Order::with('checkouts')->first();
-if ($order->checkouts->first()->is_paid) {
+$order = Order::with('checkout')->first();
+if ($order->checkout->is_paid) {
     echo 'Order is paid';
 } else {
     echo 'Order is not paid';
@@ -103,7 +103,7 @@ protected function schedule(Schedule $schedule)
 }
 ```
 
-6. Add the `Lab404\StripeServer\Models\HasStripeCheckout` to your chargeable models. 
+6. Add the `Lab404\StripeServer\Models\HasStripeCheckout` or `HasStripeCheckouts` (if a model can have multiple checkouts) to your chargeable models. 
 
 ## Going deeper
 
@@ -136,7 +136,9 @@ app('stripe')->method();
 
 ### Working with your models
 
-When a model has the `Lab404\StripeServer\Models\HasStripeCheckout` you have access to the following methods and scopes:
+#### Model with many checkouts
+
+When a model has the `Lab404\StripeServer\Models\HasStripeCheckouts` you have access to the following methods and scopes:
 ```php
 // Scopes
 Model::hasCheckouts()->get();
@@ -148,6 +150,22 @@ $models->checkouts(); // returns all checkout for the model
 
 // Eager loading
 $models = Model::with('checkouts')->get(); 
+```
+
+#### Model with one checkout
+
+When a model has the `Lab404\StripeServer\Models\HasStripeCheckout` you have access to the following methods and scopes:
+```php
+// Scopes
+Model::hasCheckout()->get();
+Model::hasPaidCheckout()->get();
+Model::hasUnpaidCheckout()->get();
+
+// Methods
+$models->checkout(); // returns the checkout for the model
+
+// Eager loading
+$models = Model::with('checkout')->get(); 
 ```
 
 ### Customize the `StripeCheckout` model

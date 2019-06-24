@@ -9,30 +9,30 @@ use Illuminate\Support\Facades\Config;
 /**
  * Trait HasStripeCheckout
  * @package Lab404\StripeServer\Models
- * @method MorphMany morphMany($related, $name, $type = null, $id = null, $localKey = null)
+ * @method MorphOne morphOne(string $related, string $name, string $type = null, string $id = null, string $localKey = null)
  */
 trait HasStripeCheckout
 {
-    public function checkouts(): MorphMany
+    public function checkout(): MorphOne
     {
-        return $this->morphMany(Config::get('stripe-server.model'), 'chargeable');
+        return $this->morphOne(Config::get('stripe-server.model'), 'chargeable');
     }
 
-    public function scopeHasCheckouts(Builder $query): void
+    public function scopeHasCheckout(Builder $query): void
     {
-        $query->has('checkouts');
+        $query->has('checkout');
     }
 
-    public function scopeHasPaidCheckouts(Builder $query): void
+    public function scopeHasPaidCheckout(Builder $query): void
     {
-        $query->whereHas('checkouts', function ($query) {
+        $query->whereHas('checkout', function ($query) {
             $query->where('is_paid', '=', 1);
         });
     }
 
-    public function scopeHasUnpaidCheckouts(Builder $query): void
+    public function scopeHasUnpaidCheckout(Builder $query): void
     {
-        $query->whereHas('checkouts', function ($query) {
+        $query->whereHas('checkout', function ($query) {
             $query->where('is_paid', '=', 0);
         });
     }
