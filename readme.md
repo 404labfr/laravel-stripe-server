@@ -183,21 +183,36 @@ $models = Model::with('checkout')->get();
 
 ### Customize the `StripeCheckout` model
 
-TODO
-
-See `config/stripe-server.php`.
+Configure `model` in `config/stripe-server.php`. Your custom model should extend the default one.
 
 ### Customize the redirector
 
-TODO
+When you use the `redirectSession()` method, an instance of `Illuminate\View\View` is returned. You can do:
 
-See the `stripe-server::redirector` view.
+```php
+return Stripe::redirectSession('...')->with([
+    'title' => 'My custom title',
+    'message' => 'My customer redirect message'
+]);
+```
 
-### Work with others Stripe events
+### Artisan commands
 
-TODO
+#### `stripe:checkout-session-completed`
 
-See `Lab404\StripeServer\Commands\Events` and `Lab404\StripeServer\Events\StripeEvent`.
+Get all `checkout.session.completed` Stripe events and dispatch the event `CheckoutSessionCompleted` for each with the `succeeded` status.
+
+#### `stripe:events`
+
+Get all Stripe events and dispatch `StripeEvent` for each one.
+
+#### `stripe:purge`
+
+Delete all unpaid `StripeCheckout` older than the given days. Customize with the `--days` option, defaults to 7. It's convenient to call it in a scheduler:
+
+```
+$schedule->command('stripe:purge')->dailyAt('12:00');
+```
 
 ## Nova
 
@@ -213,9 +228,9 @@ This resource is not dynamically registered because it's quite simple and you ma
 
 ## TODOs and ideas
 
-[ ] Refund
-[ ] Purge old stripe checkouts
-[ ] Nova actions
+[x] Purge unpaid stripe checkouts  
+[ ] Refund    
+[ ] Nova actions  
 
 ## Tests
 

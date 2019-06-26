@@ -3,6 +3,7 @@
 namespace Lab404\StripeServer;
 
 use Lab404\StripeServer\Commands\Events;
+use Lab404\StripeServer\Commands\Purge;
 use Lab404\StripeServer\Commands\StripeCompletedCheckout;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
@@ -29,6 +30,7 @@ class StripeServerServiceProvider extends BaseServiceProvider
             $this->commands([
                 Events::class,
                 StripeCompletedCheckout::class,
+                Purge::class,
             ]);
         }
     }
@@ -43,14 +45,12 @@ class StripeServerServiceProvider extends BaseServiceProvider
     protected function mergeConfig()
     {
         $configPath = __DIR__ . '/../config/' . $this->configName . '.php';
-
         $this->mergeConfigFrom($configPath, $this->configName);
     }
 
     protected function publishConfig()
     {
         $configPath = __DIR__ . '/../config/' . $this->configName . '.php';
-
-        $this->publishes([$configPath => config_path($this->configName . '.php')], 'impersonate');
+        $this->publishes([$configPath => config_path($this->configName . '.php')], 'config');
     }
 }
