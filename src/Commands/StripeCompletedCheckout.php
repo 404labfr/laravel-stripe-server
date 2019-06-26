@@ -29,9 +29,16 @@ class StripeCompletedCheckout extends Command
 
         /** @var Collection $checkouts */
         $checkouts = $model::with('chargeable')->paymentIntentIdsAre($ids)->isNotPaid()->get();
-        $checkouts->each(function ($checkout) {
-            $this->info('Dispatching ' . $checkout->payment_intent_id);
-            Event::dispatch(new CheckoutSessionCompleted($checkout));
+        $checkouts->each(function ($checkout) use ($stripe) {
+            try {
+                $this->info('Dispatching ' . $checkout->payment_intent_id);
+                $payment = $stripe->requestPaymentIntent($checkout->payment_intent_id)->call();
+                if ($payment && $payment->status === 'succeeded') {
+                    Event::dispatch(new CheckoutSessionCompleted($checkout, $payment));
+                }
+            } catch (\Exception $e) {
+                unset($e);
+            }
         });
     }
 }

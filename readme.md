@@ -65,6 +65,8 @@ class CheckoutListener
         $checkout = $event->checkout;
         /** Your charged model */
         $chargeable = $checkout->chargeable;
+        /** The PaymentIntent returned by Stripe */
+        $payment = $event->paymentIntent;
       
         /** Important! Mark the checkout as paid */
         $checkout->markAsPaid();
@@ -133,6 +135,16 @@ With container:
 ```
 app('stripe')->method();
 ```
+
+### Available methods
+
+- `redirectSession(string $session_id): Illuminate\Contracts\View\View`
+- `registerCheckout(\Stripe\Checkout\Session $session, Model $model): Illuminate\Database\Eloquent\Model`
+- `requestCreateCharge(): StripeServer\Requests\CreateCharge`
+- `requestCreateSession(): StripeServer\Requests\CreateSession`
+- `requestPaymentIntent(string $id): StripeServer\Requests\PaymentIntent`
+- `requestEvents(string $type, int $hours = 24): StripeServer\Requests\Events`
+- `requestSessionCheckoutCompletedEvents(int $hours = 24): StripeServer\Requests\Events`
 
 ### Working with your models
 
