@@ -4,7 +4,7 @@ namespace Lab404\StripeServer\Requests;
 
 use Stripe\Charge as StripeCharge;
 
-class Charge extends Command
+class CreateCharge extends Command
 {
     protected $params = [
         'amount' => null,

@@ -5,9 +5,10 @@ namespace Lab404\StripeServer;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Config;
-use Lab404\StripeServer\Requests\Charge;
+use Lab404\StripeServer\Requests\CreateCharge;
 use Lab404\StripeServer\Requests\CreateSession;
 use Lab404\StripeServer\Requests\Events;
+use Lab404\StripeServer\Requests\PaymentIntent;
 use Stripe\Stripe as StripeCore;
 
 class Stripe
@@ -51,14 +52,19 @@ class Stripe
         return $checkout;
     }
 
-    public function requestCharge(): Charge
+    public function requestCreateCharge(): CreateCharge
     {
-        return new Charge();
+        return new CreateCharge();
     }
 
     public function requestCreateSession(): CreateSession
     {
         return new CreateSession();
+    }
+
+    public function requestPaymentIntent(string $id): PaymentIntent
+    {
+        return (new PaymentIntent())->setId($id);
     }
 
     public function requestEvents(string $type, int $hours = 24): Events
