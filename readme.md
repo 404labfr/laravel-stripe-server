@@ -17,7 +17,13 @@ Laravel Stripe Server is a library to handle Stripe SCA checkout for your models
 - Laravel 6.x or 7.x
 - PHP >= 7.2
 
-**See [0.3](https://github.com/404labfr/laravel-stripe-server/tree/0.3.2) for Laravel 5.8**
+### Laravel support
+
+| Version       | Release       |
+|:-------------:|:-------------:|
+| 6.x, 7.x      | 1.1           |
+| 6.x           | 1.0           |
+| 5.8           | 0.3           |
 
 ## Intended workflow
 
