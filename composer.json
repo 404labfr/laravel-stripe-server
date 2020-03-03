@@ -16,7 +16,7 @@
   ],
   "require": {
     "php": "^7.2",
-    "laravel/framework": "^6.0",
+    "laravel/framework": "^6.0 | ^7.0",
     "stripe/stripe-php": "^6.43"
   },
   "license": "MIT",
