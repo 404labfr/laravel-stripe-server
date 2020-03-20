@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Event;
 use Lab404\StripeServer\Events\CheckoutSessionCompleted;
+use Lab404\StripeServer\Models\StripeCheckout;
 use Lab404\StripeServer\Stripe;
 
 class StripeCompletedCheckout extends Command
@@ -26,6 +27,7 @@ class StripeCompletedCheckout extends Command
 
         $ids = $events->pluck('payment_intent')->toArray();
         $model = Config::get('stripe-server.model');
+        $model = $model ?? StripeCheckout::class;
 
         /** @var Collection $checkouts */
         $checkouts = $model::with('chargeable')->paymentIntentIdsAre($ids)->isNotPaid()->get();

@@ -19,6 +19,7 @@ class Purge extends Command
     {
         /** @var StripeCheckout $model */
         $model = Config::get('stripe-server.model');
+        $model = $model ?? StripeCheckout::class;
 
         DB::table($model->getTable())
             ->where('is_paid', 0)
