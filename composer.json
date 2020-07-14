@@ -17,13 +17,13 @@
   "require": {
     "php": "^7.2",
     "laravel/framework": "^6.0 | ^7.0",
-    "stripe/stripe-php": "^6.43"
+    "stripe/stripe-php": "^7.40"
   },
   "license": "MIT",
   "authors": [
     {
-      "name": "404lab",
-      "email": "web@404lab.fr"
+      "name": "Marceau Ka",
+      "email": "marceau@casals.fr"
     }
   ],
   "autoload": {
